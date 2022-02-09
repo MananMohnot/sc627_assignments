@@ -63,8 +63,11 @@ def computeDistancePointToPolygon(P, q):
             if perp_dist[-1] < min_d:
                 min_d = perp_dist[-1]
                 v = [P[(i+1) % n][0]-P[i][0], P[(i+1) % n][1]-P[i][1]]
-    v = v/np.sqrt((v[0]**2)+(v[1]**2))
-    return [min(perp_dist), (v)]
+    #v = v/np.sqrt((v[0]**2)+(v[1]**2))
+    if len(perp_dist) == 0:
+        return [99999, [0, 0]]
+    else:
+        return [min(perp_dist), (v)]
 
 
 def computeTangentVectorToPolygon(P, q):
@@ -80,24 +83,29 @@ def computeTangentVectorToPolygon(P, q):
         if perp_dist[-1] < min_d:
             min_d = perp_dist[-1]
             v = [q[0]-P[i][0], q[1]-P[i][1]]
-    v = v/np.sqrt((v[0]**2)+(v[1]**2))
+    #v = v/np.sqrt((v[0]*v[0])+(v[1]*v[1]))
     tmp = v[0]
     v[0] = -v[1]
     v[1] = tmp
     if(min_d < computeDistancePointToPolygon(P, q)[0]):
+        print("from point", min_d)
         return [min_d, v]
     else:
-        return [min_d, computeDistancePointToPolygon(P, q)[1]]
+        print("from line", computeDistancePointToPolygon(P, q)[0])
+        return [computeDistancePointToPolygon(P, q)[0], computeDistancePointToPolygon(P, q)[1]]
 
     # for i in range(n):
 if __name__ == '__main__':
     p1 = [1, 0]
     p2 = [1, 1]
-    q = [0, 2]
+    q = [3.2228522928556176, - 0.06868785800315969]
 
-    P = np.array([[0, 0], [1, 0], [0, 1]])
+    P = np.array([[1, 0], [3, 0], [1, 2]])
     #t = computeLineThroughTwoPoints(p1, p2)
     #d = distancePointToLine(q, p1, p2)
     #k = computeDistancePointToSegment(q, p1, p2)
     l = computeTangentVectorToPolygon(P, q)
+    print(P)
+    print(q)
     print(l)
+    # print(np.arctan(l[1][0]/l[1][1]))
