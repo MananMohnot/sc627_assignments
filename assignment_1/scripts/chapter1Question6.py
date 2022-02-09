@@ -48,7 +48,7 @@ def computeDistancePointToPolygon(P, q):
     # TODO make special condition if point inside the polygon
     n = len(P)
     flag = 0
-    v = 0
+    v = [0, 0]
     perp_dist = []
     for i in range(n):
         #print(computeDistancePointToSegment(q, P[i], P[(i+1) % n]))
@@ -63,7 +63,8 @@ def computeDistancePointToPolygon(P, q):
             if perp_dist[-1] < min_d:
                 min_d = perp_dist[-1]
                 v = [P[(i+1) % n][0]-P[i][0], P[(i+1) % n][1]-P[i][1]]
-    #v = v/np.sqrt((v[0]**2)+(v[1]**2))
+    # print(v, " $$$$$$$$$$$$$$$$$$$$$$")
+    v = v/np.sqrt((v[0]**2)+(v[1]**2))
     if len(perp_dist) == 0:
         return [99999, [0, 0]]
     else:
@@ -83,12 +84,12 @@ def computeTangentVectorToPolygon(P, q):
         if perp_dist[-1] < min_d:
             min_d = perp_dist[-1]
             v = [q[0]-P[i][0], q[1]-P[i][1]]
-    #v = v/np.sqrt((v[0]*v[0])+(v[1]*v[1]))
+    v = v/np.sqrt((v[0]*v[0])+(v[1]*v[1]))
     tmp = v[0]
     v[0] = -v[1]
     v[1] = tmp
     if(min_d < computeDistancePointToPolygon(P, q)[0]):
-        print("from point", min_d)
+        print(v, "from point", min_d)
         return [min_d, v]
     else:
         print("from line", computeDistancePointToPolygon(P, q)[0])

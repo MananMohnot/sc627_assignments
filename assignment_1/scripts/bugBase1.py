@@ -9,8 +9,9 @@ import chapter1Question6 as ch
 print("code started")
 
 N = 0  # number of obstacles
-P = np.array([np.array([[1, 0], [3, 0], [1, 2]]),
-             np.array([[2, 3], [4, 1], [5, 2]])])
+# P = np.array([np.array([[1, 0], [3, 0], [1, 2]]),
+#              np.array([[2, 3], [4, 1], [5, 2]])])
+P = np.array([np.array([[1, 0], [3, 0], [1, 2]])])
 N = len(P)
 # print(N)
 # print(P[0])
@@ -44,14 +45,15 @@ while di > step_size:
         p = P[np.argmin(dis_land[:, 0])]
         # Circumnavigation starts
         if test == 1:
-            for i in range(39):
+            for i in range(1000):
                 # print([x[-1], y[-1]])
                 vd = ch.computeTangentVectorToPolygon(p, [x[-1], y[-1]])[1]
                 print(x[-1], y[-1])
                 # plt.scatter(x, y)
                 # plt.show()
 
-                theta = np.arctan(vd[1]/vd[0])
+                theta = np.arctan2(vd[1], vd[0])
+                # print(theta * 180/np.pi)
                 x.append(x[-1] + step_size*np.cos(theta))
                 y.append(y[-1] + step_size*np.sin(theta))
                 di = ch.dist([x[-1], y[-1]], end_point)
