@@ -89,13 +89,25 @@ def computeTangentVectorToPolygon(P, q):
     v[0] = -v[1]
     v[1] = tmp
     if(min_d < computeDistancePointToPolygon(P, q)[0]):
-        print(v, "from point", min_d)
-        return [min_d, v]
+        # print(v, "from point", min_d)
+        # 0 for point, 1 for line
+        return [min_d, v,0]
     else:
-        print("from line", computeDistancePointToPolygon(P, q)[0])
-        return [computeDistancePointToPolygon(P, q)[0], computeDistancePointToPolygon(P, q)[1]]
+        # print("from line", computeDistancePointToPolygon(P, q)[0])
+        return [computeDistancePointToPolygon(P, q)[0], computeDistancePointToPolygon(P, q)[1],1]
 
-    # for i in range(n):
+    # Some additional helpers
+def towardsObstacle(P,q):
+    if computeDistancePointToPolygon(P,q):
+        v=computeDistancePointToPolygon(P,q)[1]
+        tmp = v[0]
+        v[0] = -v[1]
+        v[1] = tmp
+    return v
+        
+
+
+
 if __name__ == '__main__':
     p1 = [1, 0]
     p2 = [1, 1]
@@ -110,3 +122,4 @@ if __name__ == '__main__':
     print(q)
     print(l)
     # print(np.arctan(l[1][0]/l[1][1]))
+
