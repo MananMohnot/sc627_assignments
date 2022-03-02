@@ -30,9 +30,6 @@ for point in obstacle:
 list_poly.append(poly)
 P=np.array(list_poly)
 
-
-
-
 def  stepInto(p,q):
     v= ch.towardsObstacle(p,q)
     inta = np.arctan2(v[1], v[0])
