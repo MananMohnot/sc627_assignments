@@ -6,7 +6,7 @@ import numpy
 import chapter1Question6 as ch
 di_leave=np.inf
 
-with open('input.txt') as f:
+with open('../input.txt') as f:
     lines = f.readlines()
 data=[]
 for line in lines:
@@ -113,6 +113,7 @@ print("point reached ", di)
 plt.scatter(x, y)
 plt.show()
 
-with open("output.txt", "w") as fo:
+with open("../output.txt", "w") as fo:
     for i,X in enumerate(x):
         fo.write(str(X)+","+str(y[i])+"\n")
+
